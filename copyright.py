@@ -15,11 +15,12 @@ import traceback
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
-API_ID = 29593257
-API_HASH = "e9a3897c961f8dce2a0a88ab8d3dd843"
-BOT_TOKEN = "7370306201:AAGoUHzBkSSQYyEbEzIKMNNksAMD81EbObc"
-DEVS = [5690711835, 6312693124]
-BOT_USERNAME = "BOT" # change your bot username without @
+API_ID = 23967991
+API_HASH = "a2c3ccfaff4c2dbbff7d54981828d4f1"
+BOT_TOKEN = "7848626329:AAE0XlwVEf91Bp0f3tPGjyh60RvhsiS4-qM"
+DEVS = [1883889098, 7921906677]
+BOT_USERNAME = "Protectorvbot" # change your bot username without 
+OWNER_ID = 7921906677
 
 ALL_GROUPS = []
 TOTAL_USERS = []
@@ -84,16 +85,35 @@ async def restart_(_, e: Message):
    os.execl(sys.executable, *args)
    quit()
 
-@bot.on_message(filters.user(DEVS) & filters.command(["stat", "stats"]))
+@bot.on_message(filters.user(OWNER_ID) & filters.command(["stat", "stats"]))
 async def status(_, message: Message):
-   wait = await message.reply("Fetching.....")
-   stats = "**Here is total stats of me!** \n\n"
-   stats += f"Total Chats: `{len(ALL_GROUPS)}` \n"
-   stats += f"Total users: `{len(TOTAL_USERS)}` \n"
-   stats += f"Disabled chats: `{len(DISABLE_CHATS)}` \n"
-   stats += f"Total Media active chats: `{len(MEDIA_GROUPS)}` \n\n"
-   #stats += f"**© @Lemonade0_0**"
-   await wait.edit_text(stats)
+    wait = await message.reply("Fetching.....")
+    stats = "**Here is total stats of me!** \n\n"
+    stats += f"Total Chats: `{len(ALL_GROUPS)}` \n"
+    stats += f"Total users: `{len(TOTAL_USERS)}` \n"
+    stats += f"Disabled chats: `{len(DISABLE_CHATS)}` \n"
+    stats += f"Total Media active chats: `{len(MEDIA_GROUPS)}` \n\n"
+    await wait.edit_text(stats)
+
+
+# Add this function near the other command functions
+@bot.on_message(filters.user(OWNER_ID) & filters.command(["broadcast"]))
+async def broadcast_message(_, message: Message):
+    broadcast_text = ' '.join(message.command[1:])
+    if not broadcast_text:
+        await message.reply("Please provide a message to broadcast.")
+        return
+    
+    success = 0
+    failure = 0
+    for user_id in TOTAL_USERS:
+        try:
+            await bot.send_message(user_id, broadcast_text)
+            success += 1
+        except Exception:
+            failure += 1
+    
+    await message.reply(f"Broadcast completed: {success} success, {failure} failure.")
 
 
    
