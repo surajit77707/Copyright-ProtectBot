@@ -61,6 +61,21 @@ def add_user(user_id):
    if user_id not in TOTAL_USERS:
       TOTAL_USERS.append(user_id)
 
+def time_formatter(milliseconds):
+    seconds, milliseconds = divmod(int(milliseconds), 1000)
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    days, hours = divmod(hours, 24)
+
+    time_format = (
+        (f"{days}d, " if days else "") +
+        (f"{hours}h, " if hours else "") +
+        (f"{minutes}m, " if minutes else "") +
+        (f"{seconds}s, " if seconds else "") +
+        (f"{milliseconds}ms" if milliseconds else "")
+    )
+    return time_format
+
 @bot.on_message(filters.command(["ping", "speed"]))
 async def ping(_, e: Message):
    start = datetime.datetime.now()
