@@ -5,6 +5,7 @@ import time
 import datetime
 import random 
 import asyncio
+import platform
 from pytz import timezone
 from pyrogram import filters, Client, idle
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
