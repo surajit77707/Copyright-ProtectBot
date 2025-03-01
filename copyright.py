@@ -8,7 +8,7 @@ import asyncio
 import platform
 from pytz import timezone
 from pyrogram import filters, Client, idle
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram.enums import ChatMemberStatus, ChatType
 from pyrogram.raw.types import UpdateEditMessage, UpdateEditChannelMessage
 import traceback
