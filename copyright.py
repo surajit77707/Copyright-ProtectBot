@@ -86,9 +86,9 @@ async def ping(_, e: Message):
     python_version = platform.python_version()
     start_time = time.time()  # Define start_time here
     uptime = time_formatter((time.time() - start_time) * 1000)
-    await rep.edit_text(f"🤖 ᑭOᑎᘜ: `{ms}`ᴍs"
+    await rep.edit_text(f"🤖 ᑭOᑎᘜ: `{ms}`ᴍs\n"
                         f"➪ᑌᑭ TIᗰᗴ: {uptime}\n"
-                        f"➪ᗷᗩᑎᑎᗴᖇ ᐯᗴᖇՏIOᑎ: {python_version},"
+                        f"➪ᗷᗩᑎᑎᗴᖇ ᐯᗴᖇՏIOᑎ: {python_version},\n"
                         f"➪ՏᑌᑭᑭOᖇT: @UmbrellaUCorp ,"
                        )
 
