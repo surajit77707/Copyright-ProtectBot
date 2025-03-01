@@ -29,31 +29,56 @@ MEDIA_GROUPS = []
 DISABLE_CHATS = []
 GROUP_MEDIAS = {}
 
-DELETE_MESSAGE = [
-"1 Hour complete, I'm doing my work...",
-"Its time to delete all medias!",
-"No one can Copyright until I'm alive 😤",
-"Hue hue, let's delete media...",
-"I'm here to delete medias 🙋", 
-"😮‍💨 Finally I delete medias",
-"Great work done by me 🥲",
-"All media cleared!",
-"hue hue medias deleted by me 😮‍💨",
-"medias....",
-"it's hard to delete all medias 🙄",
-]
+DELETE_MESSAGE = ["baap", "🅐‌» 🄰🄻🄻🄴🄽 🅲🅻🅰️🆂🆂🆁🅾️🅾️🅼 🅲🅾️🅽🆃🅰️🅲🆃", "beta", "Batichod", "hydrogen", "energy", "Gand", "papa", "porn", "xxx", "sex", "Bahenchod", "XII", "page", "Madarchod", "meiotic", "divisions", "System.in", "Scanner", "void", "nextInt","PORN","porn"]
 
-START_MESSAGE = """
-**Hello {}, I'm Anti - CopyRight Bot**
+START_MESSAGE = """<b>𝑯𝑬𝒀 𝑮𝑼𝒀 🦍</b>
 
- > **I can save your groups from Copyrights 😉**
+</b>「 ⌜ 𝓑𝓐𝓝𝓝𝓔𝓡 ꭙ 𝐂𝐎𝐏𝐘𝐑𝐈𝐆𝐇𝐓 ⌟ 」 </b>
 
- **Work:** I'll Delete all medias of your group in every 1 hour ➰
- 
- **Process?:** Simply add me in your group and promote as admin with delete messages right!
+ᴡᴏʀᴋ:  ɪ'ʟʟ ᴅᴇʟᴇᴛᴇ ᴀʟʟ ᴍᴇᴅɪᴀꜱ ᴏꜰ ʏᴏᴜʀ ɢʀᴏᴜᴘ ɪɴ ᴇᴠᴇʀʏ 1 ʜᴏᴜʀ ➰  
+ɪ ᴄᴀɴ ꜱᴀᴠᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘꜱ ꜰʀᴏᴍ ᴄᴏᴘʏʀɪɢʜᴛꜱ 😉   
+**ᴘʀᴏᴄᴇꜱꜱ?:** ꜱɪᴍᴘʟʏ ᴀᴅᴅ ᴍᴇ ɪɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ᴘʀᴏᴍᴏᴛᴇ ᴀꜱ ᴀᴅᴍɪɴ ᴡɪᴛʜ ᴅᴇʟᴇᴛᴇ ᴍᴇꜱꜱᴀɢᴇꜱ ʀɪɢʜᴛ!
+
 """
+@app.on_message(filters.command("start"))
+async def start(_, msg):
+    buttons = [
+        [ 
+          InlineKeyboardButton("ᴀᴅᴅ ᴍᴇ", url=f"https://t.me/{BOT_USERNAME}?startgroup=true")
+        ],
+        [
+          InlineKeyboardButton("Aʙᴏᴜᴛ", callback_data="dil_back")
+        ]]
+    
+    reply_markup = InlineKeyboardMarkup(buttons)
+    
+    await msg.reply_photo(
+        photo="https://envs.sh/bu4.jpg",
+        caption=start_txt,
+        reply_markup=reply_markup
+    )
 
-BUTTON = [[InlineKeyboardButton("+ Add me in group +", url=f"http://t.me/{BOT_USERNAME}?startgroup=s&admin=delete_messages")]]
+
+gd_buttons = [              
+        [
+            InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ", url="https://t.me/UmbrellaUCorp"),    
+            InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇs", url="https://t.me/moviiieeeesss"),    
+        ]
+        ]
+
+@app.on_callback_query(filters.regex("dil_back"))
+async def dil_back(_, query: CallbackQuery):
+    await query.message.edit_caption(START_MESSAGE,
+                                    reply_markup=InlineKeyboardMarkup(gd_buttons),)
+        
+
+# -------------------------------------------------------------------------------------
+
+
+# -------------------------------------------------------------------------------------
+
+
+start_time = time.time()
 
 bot = Client('bot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
