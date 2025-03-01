@@ -89,7 +89,7 @@ async def ping(_, e: Message):
     await rep.edit_text(f"🤖 ᑭOᑎᘜ: `{ms}`ᴍs\n"
                         f"➪ᑌᑭ TIᗰᗴ: {uptime}\n"
                         f"➪ᗷᗩᑎᑎᗴᖇ ᐯᗴᖇՏIOᑎ: {python_version},\n"
-                        f"➪ՏᑌᑭᑭOᖇT: @UmbrellaUCorp ,"
+                        f"➪ՏᑌᑭᑭOᖇT: @UmbrellaUCorp ,\n"
                        )
 
 @bot.on_message(filters.command(["help", "start"]))
