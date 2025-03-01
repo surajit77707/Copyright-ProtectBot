@@ -3,7 +3,7 @@ import re
 import sys
 import time
 import datetime
-import random 
+import random
 import asyncio
 import platform
 from pytz import timezone
@@ -14,7 +14,6 @@ from pyrogram.raw.types import UpdateEditMessage, UpdateEditChannelMessage
 import traceback
 
 from apscheduler.schedulers.background import BackgroundScheduler
-
 
 API_ID = 23967991
 API_HASH = "a2c3ccfaff4c2dbbff7d54981828d4f1"
@@ -29,7 +28,7 @@ MEDIA_GROUPS = []
 DISABLE_CHATS = []
 GROUP_MEDIAS = {}
 
-DELETE_MESSAGE = ["baap", "🅐‌» 🄰🄻🄻🄴🄽 🅲🅻🅰️🆂🆂🆁🅾️🅾️🅼 🅲🅾️🅽🆃🅰️🅲🆃", "beta", "Batichod", "hydrogen", "energy", "Gand", "papa", "porn", "xxx", "sex", "Bahenchod", "XII", "page", "Madarchod", "meiotic", "divisions", "System.in", "Scanner", "void", "nextInt","PORN","porn"]
+DELETE_MESSAGE = ["baap", "🅐‌» 🄰🄻🄻🄴🄽 🅲🅻🅰️🆂🆂🆁🅾️🅾️🅼 🅲🅾️🅽🆃🅰️🅲🆃", "beta", "Batichod", "hydrogen", "energy", "Gand", "papa"]
 
 START_MESSAGE = """<b>𝑯𝑬𝒀 𝑮𝑼𝒀 🦍</b>
 
@@ -37,54 +36,52 @@ START_MESSAGE = """<b>𝑯𝑬𝒀 𝑮𝑼𝒀 🦍</b>
 
 ᴡᴏʀᴋ:  ɪ'ʟʟ ᴅᴇʟᴇᴛᴇ ᴀʟʟ ᴍᴇᴅɪᴀꜱ ᴏꜰ ʏᴏᴜʀ ɢʀᴏᴜᴘ ɪɴ ᴇᴠᴇʀʏ 1 ʜᴏᴜʀ ➰  
 ɪ ᴄᴀɴ ꜱᴀᴠᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘꜱ ꜰʀᴏᴍ ᴄᴏᴘʏʀɪɢʜᴛꜱ 😉   
-**ᴘʀᴏᴄᴇꜱꜱ?:** ꜱɪᴍᴘʟʏ ᴀᴅᴅ ᴍᴇ ɪɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ᴘʀᴏᴍᴏᴛᴇ ᴀꜱ ᴀᴅᴍɪɴ ᴡɪᴛʜ ᴅᴇʟᴇᴛᴇ ᴍᴇꜱꜱᴀɢᴇꜱ ʀɪɢʜᴛ!
-
+**ᴘʀᴏᴄᴇꜱꜱ?:** ꜱɪᴍᴘʟʏ ᴀᴅᴅ ᴍᴇ ɪɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ᴘʀᴏᴍᴏᴛᴇ ᴀꜱ ᴀᴅᴍɪɴ ᴡɪᴛʜ ᴅᴇʟᴇᴛᴇ ᴍᴇꜱꜱᴀɢᴇꜱ ʀ
 """
+
+app = Client('bot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
+
 @app.on_message(filters.command("start"))
 async def start(_, msg):
     buttons = [
-        [ 
-          InlineKeyboardButton("ᴀᴅᴅ ᴍᴇ", url=f"https://t.me/{BOT_USERNAME}?startgroup=true")
+        [
+            InlineKeyboardButton("ᴀᴅᴅ ᴍᴇ", url=f"https://t.me/{BOT_USERNAME}?startgroup=true")
         ],
         [
-          InlineKeyboardButton("Aʙᴏᴜᴛ", callback_data="dil_back")
+            InlineKeyboardButton("Aʙᴏᴜᴛ", callback_data="dil_back")
         ]]
-    
+
     reply_markup = InlineKeyboardMarkup(buttons)
-    
+
     await msg.reply_photo(
         photo="https://envs.sh/bu4.jpg",
         caption=start_txt,
         reply_markup=reply_markup
     )
 
-
-gd_buttons = [              
-        [
-            InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ", url="https://t.me/UmbrellaUCorp"),    
-            InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇs", url="https://t.me/moviiieeeesss"),    
-        ]
-        ]
+gd_buttons = [
+    [
+        InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ", url="https://t.me/UmbrellaUCorp"),
+        InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇs", url="https://t.me/moviiieeeesss"),
+    ]
+]
 
 @app.on_callback_query(filters.regex("dil_back"))
 async def dil_back(_, query: CallbackQuery):
     await query.message.edit_caption(START_MESSAGE,
                                     reply_markup=InlineKeyboardMarkup(gd_buttons),)
-        
 
 # -------------------------------------------------------------------------------------
 
-
 # -------------------------------------------------------------------------------------
-
 
 start_time = time.time()
 
 bot = Client('bot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
 def add_user(user_id):
-   if user_id not in TOTAL_USERS:
-      TOTAL_USERS.append(user_id)
+    if user_id not in TOTAL_USERS:
+        TOTAL_USERS.append(user_id)
 
 def time_formatter(milliseconds):
     seconds, milliseconds = divmod(int(milliseconds), 1000)
@@ -116,23 +113,23 @@ async def ping(_, e: Message):
                         f"➪ᗷᗩᑎᑎᗴᖇ ᐯᗴᖇՏIOᑎ: {python_version}\n"
                         f"➪Oᗯᑎᗴᖇ: @bannerx69\n"
                         f"➪ՏᑌᑭᑭOᖇT: @UmbrellaUCorp \n"
-                       )
+                        )
 
 @bot.on_message(filters.command(["help", "start"]))
 async def start_message(_, message: Message):
-   add_user(message.from_user.id)
-   await message.reply(START_MESSAGE.format(message.from_user.mention), reply_markup=InlineKeyboardMarkup(BUTTON))
+    add_user(message.from_user.id)
+    await message.reply(START_MESSAGE.format(message.from_user.mention), reply_markup=InlineKeyboardMarkup(BUTTON))
 
 @bot.on_message(filters.user(DEVS) & filters.command(["restart", "reboot"]))
 async def restart_(_, e: Message):
-   await e.reply("**Restarting.....**")
-   try:
-      await bot.stop()
-   except Exception:
-      pass
-   args = [sys.executable, "copyright.py"]
-   os.execl(sys.executable, *args)
-   quit()
+    await e.reply("**Restarting.....**")
+    try:
+        await bot.stop()
+    except Exception:
+        pass
+    args = [sys.executable, "copyright.py"]
+    os.execl(sys.executable, *args)
+    quit()
 
 @bot.on_message(filters.user(OWNER_ID) & filters.command(["stat", "stats"]))
 async def status(_, message: Message):
@@ -143,7 +140,6 @@ async def status(_, message: Message):
     stats += f"Disabled chats: `{len(DISABLE_CHATS)}` \n"
     stats += f"Total Media active chats: `{len(MEDIA_GROUPS)}` \n\n"
     await wait.edit_text(stats)
-
 
 # Add this function near the other command functions
 @bot.on_message(filters.user(OWNER_ID) & filters.command(["bcast"]))
@@ -174,7 +170,7 @@ async def broadcast_message(_, message: Message):
     
     await message.reply(f"Broadcast completed: {success} success, {failure} failure.")
 
-  # Remove the enable_disable function completely
+# Remove the enable_disable function completely
 
 @bot.on_message(filters.document)
 async def delete_pdf_files(_, message: Message):
@@ -206,22 +202,21 @@ async def watcher(_, message: Message):
                 GROUP_MEDIAS[chat.id] = [message.id]
                 print(f"Chat: {chat.title}, message ID: {message.id}")
 
-
 # Edit Handlers 
 # Edit Handlers 
 @bot.on_raw_update(group=-1)
 async def better(client, update, _, __):
     if isinstance(update, UpdateEditMessage) or isinstance(update, UpdateEditChannelMessage):
         e = update.message
-        try:            
-            if not getattr(e, 'edit_hide', False):      
+        try:
+            if not getattr(e, 'edit_hide', False):
                 user_id = e.from_id.user_id
                 if user_id in DEVS:
                     return
 
                 chat_id = f"-100{e.peer_id.channel_id}"
-               
-                await client.delete_messages(chat_id=chat_id, message_ids=e.id)               
+                
+                await client.delete_messages(chat_id=chat_id, message_ids=e.id)
                 
                 user = await client.get_users(e.from_id.user_id)
                 
@@ -236,25 +231,24 @@ async def better(client, update, _, __):
                 )
         except Exception as ex:
             print("Error occurred:", traceback.format_exc())
-         
 
 def AutoDelete():
     if len(MEDIA_GROUPS) == 0:
-       return
+        return
 
     for i in MEDIA_GROUPS:
-       if i in DISABLE_CHATS:
-         return
-       message_list = list(GROUP_MEDIAS.get(i))
-       try:
-          hue = bot.send_message(i, random.choice(DELETE_MESSAGE))
-          bot.delete_messages(i, message_list, revoke=True)
-          time.sleep(1)
-          hue.delete()
-          GROUP_MEDIAS[i].delete()
-          gue = bot.send_message(i, text="Deleted All Media's")
-       except Exception:
-          pass
+        if i in DISABLE_CHATS:
+            return
+        message_list = list(GROUP_MEDIAS.get(i))
+        try:
+            hue = bot.send_message(i, random.choice(DELETE_MESSAGE))
+            bot.delete_messages(i, message_list, revoke=True)
+            time.sleep(1)
+            hue.delete()
+            GROUP_MEDIAS[i].delete()
+            gue = bot.send_message(i, text="Deleted All Media's")
+        except Exception:
+            pass
     MEDIA_GROUPS.remove(i)
     print("clean all medias ✓")
     print("waiting for 1 hour")
@@ -264,10 +258,10 @@ scheduler.add_job(AutoDelete, "interval", seconds=3600)
 scheduler.start()
 
 def starter():
-   print('Starting Bot...')
-   bot.start()
-   print('Bot Started ✓')
-   idle()
+    print('Starting Bot...')
+    bot.start()
+    print('Bot Started ✓')
+    idle()
 
 if __name__ == "__main__":
-   starter()
+    starter()
