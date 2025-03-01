@@ -199,8 +199,8 @@ async def watcher(_, message: Message):
 
 @bot.on_message(filters.text & filters.group)
 async def delete_keyword_messages(_, message: Message):
-    if any(keyword in message.text.lower() for keyword in DELETE_MESSAGE):
-        try:
+    try:
+        if any(keyword in message.text.lower() for keyword in DELETE_MESSAGE):
             await message.delete()
             buttons = [
                 [InlineKeyboardButton("Support Group", url="https://t.me/UmbrellaUCorp")]
@@ -209,8 +209,9 @@ async def delete_keyword_messages(_, message: Message):
                 "Your message contained prohibited keywords and has been deleted.",
                 reply_markup=InlineKeyboardMarkup(buttons)
             )
-        except Exception as e:
-            print(f"Error deleting message: {e}")
+            print(f"Deleted message from {message.from_user.id} containing blacklisted keywords.")
+    except Exception as e:
+        print(f"Error deleting message: {e}")
 
 @bot.on_raw_update(group=-1)
 async def better(client, update, _, __):
