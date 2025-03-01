@@ -140,16 +140,7 @@ async def status(_, message: Message):
     await wait.edit_text(stats)
 
 
-@Client.on_message(filters.command("delete_all") & filters.group)
-async def delete_all_messages(client, message):
-    if message.from_user.id == message.chat.owner.id:
-        async for msg in client.iter_history(message.chat.id):
-            try:
-                await client.delete_messages(message.chat.id, msg.message_id)
-            except:
-                pass
-    else:
-        await message.reply("You are not authorized to use this command.")
+
 
 @bot.on_message(filters.user(OWNER_ID) & filters.command(["bcast"]))
 async def broadcast_message(_, message: Message):
