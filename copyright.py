@@ -21,7 +21,7 @@ API_HASH = "a2c3ccfaff4c2dbbff7d54981828d4f1"
 BOT_TOKEN = "7848626329:AAE0XlwVEf91Bp0f3tPGjyh60RvhsiS4-qM"
 DEVS = [1883889098, 7921906677]
 BOT_USERNAME = "Protectorvbot" # change your bot username without 
-OWNER_ID = 7921906677
+OWNER_ID = 1883889098
 
 ALL_GROUPS = []
 TOTAL_USERS = []
