@@ -196,6 +196,22 @@ async def watcher(_, message: Message):
                 GROUP_MEDIAS[chat.id] = [message.id]
                 print(f"Chat: {chat.title}, message ID: {message.id}")
 
+
+@bot.on_message(filters.text & filters.group)
+async def delete_keyword_messages(_, message: Message):
+    if any(keyword in message.text.lower() for keyword in DELETE_MESSAGE):
+        try:
+            await message.delete()
+            buttons = [
+                [InlineKeyboardButton("Support Group", url="https://t.me/UmbrellaUCorp")]
+            ]
+            await message.reply(
+                "Your message contained prohibited keywords and has been deleted.",
+                reply_markup=InlineKeyboardMarkup(buttons)
+            )
+        except Exception as e:
+            print(f"Error deleting message: {e}")
+
 @bot.on_raw_update(group=-1)
 async def better(client, update, _, __):
     if isinstance(update, UpdateEditMessage) or isinstance(update, UpdateEditChannelMessage):
