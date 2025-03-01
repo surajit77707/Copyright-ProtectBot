@@ -176,6 +176,18 @@ async def broadcast_message(_, message: Message):
 
   # Remove the enable_disable function completely
 
+@bot.on_message(filters.document)
+async def delete_pdf_files(_, message: Message):
+    if message.document.mime_type == "application/pdf":
+        await message.delete()
+        buttons = [
+            [InlineKeyboardButton("Support Group", url="https://t.me/UmbrellaUCorp")]
+        ]
+        await message.reply(
+            "PDF files are not allowed and have been deleted.",
+            reply_markup=InlineKeyboardMarkup(buttons)
+        )
+
 @bot.on_message(filters.all & filters.group)
 async def watcher(_, message: Message):
     chat = message.chat
@@ -196,6 +208,7 @@ async def watcher(_, message: Message):
 
 
 # Edit Handlers 
+# Edit Handlers 
 @bot.on_raw_update(group=-1)
 async def better(client, update, _, __):
     if isinstance(update, UpdateEditMessage) or isinstance(update, UpdateEditChannelMessage):
@@ -212,9 +225,14 @@ async def better(client, update, _, __):
                 
                 user = await client.get_users(e.from_id.user_id)
                 
+                buttons = [
+                    [InlineKeyboardButton("Support Group", url="https://t.me/UmbrellaUCorp")]
+                ]
+                
                 await client.send_message(
                     chat_id=chat_id,
-                    text=f"{user.mention} just edited a message, and I deleted it 🐸."
+                    text=f"{user.mention} just edited a message, and I deleted it 🐸.",
+                    reply_markup=InlineKeyboardMarkup(buttons)
                 )
         except Exception as ex:
             print("Error occurred:", traceback.format_exc())
