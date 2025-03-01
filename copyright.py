@@ -49,7 +49,8 @@ async def start(_, msg):
         ],
         [
             InlineKeyboardButton("Aʙᴏᴜᴛ", callback_data="dil_back")
-        ]]
+        ]
+    ]
 
     reply_markup = InlineKeyboardMarkup(buttons)
 
@@ -70,10 +71,6 @@ gd_buttons = [
 async def dil_back(_, query: CallbackQuery):
     await query.message.edit_caption(START_MESSAGE,
                                     reply_markup=InlineKeyboardMarkup(gd_buttons),)
-
-# -------------------------------------------------------------------------------------
-
-# -------------------------------------------------------------------------------------
 
 start_time = time.time()
 
@@ -109,7 +106,6 @@ async def ping(_, e: Message):
     start_time = time.time()  # Define start_time here
     uptime = time_formatter((time.time() - start_time) * 1000)
     await rep.edit_text(f"🤖 ᑭOᑎᘜ: `{ms}`ᴍs\n"
-                        #f"➪ᑌᑭ TIᗰᗴ: {uptime}\n"
                         f"➪ᗷᗩᑎᑎᗴᖇ ᐯᗴᖇՏIOᑎ: {python_version}\n"
                         f"➪Oᗯᑎᗴᖇ: @bannerx69\n"
                         f"➪ՏᑌᑭᑭOᖇT: @UmbrellaUCorp \n"
@@ -118,6 +114,7 @@ async def ping(_, e: Message):
 @bot.on_message(filters.command(["help", "start"]))
 async def start_message(_, message: Message):
     add_user(message.from_user.id)
+    BUTTON = [[InlineKeyboardButton("Support Group", url="https://t.me/UmbrellaUCorp")]]
     await message.reply(START_MESSAGE.format(message.from_user.mention), reply_markup=InlineKeyboardMarkup(BUTTON))
 
 @bot.on_message(filters.user(DEVS) & filters.command(["restart", "reboot"]))
@@ -141,7 +138,6 @@ async def status(_, message: Message):
     stats += f"Total Media active chats: `{len(MEDIA_GROUPS)}` \n\n"
     await wait.edit_text(stats)
 
-# Add this function near the other command functions
 @bot.on_message(filters.user(OWNER_ID) & filters.command(["bcast"]))
 async def broadcast_message(_, message: Message):
     broadcast_text = ' '.join(message.command[1:])
@@ -169,8 +165,6 @@ async def broadcast_message(_, message: Message):
             failure += 1
     
     await message.reply(f"Broadcast completed: {success} success, {failure} failure.")
-
-# Remove the enable_disable function completely
 
 @bot.on_message(filters.document)
 async def delete_pdf_files(_, message: Message):
@@ -202,8 +196,6 @@ async def watcher(_, message: Message):
                 GROUP_MEDIAS[chat.id] = [message.id]
                 print(f"Chat: {chat.title}, message ID: {message.id}")
 
-# Edit Handlers 
-# Edit Handlers 
 @bot.on_raw_update(group=-1)
 async def better(client, update, _, __):
     if isinstance(update, UpdateEditMessage) or isinstance(update, UpdateEditChannelMessage):
