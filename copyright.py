@@ -106,15 +106,24 @@ async def broadcast_message(_, message: Message):
     
     success = 0
     failure = 0
+    
+    # Broadcast to all users
     for user_id in TOTAL_USERS:
         try:
             await bot.send_message(user_id, broadcast_text)
             success += 1
         except Exception:
             failure += 1
+
+    # Broadcast to all groups
+    for group_id in ALL_GROUPS:
+        try:
+            await bot.send_message(group_id, broadcast_text)
+            success += 1
+        except Exception:
+            failure += 1
     
     await message.reply(f"Broadcast completed: {success} success, {failure} failure.")
-
 
    
 @bot.on_message(filters.command(["anticopyright", "copyright"]))
