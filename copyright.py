@@ -67,7 +67,13 @@ async def ping(_, e: Message):
    rep = await e.reply_text("**Pong !!**")
    end = datetime.datetime.now()
    ms = (end-start).microseconds / 1000
-   await rep.edit_text(f"🤖 **PONG**: `{ms}`ᴍs")
+   python_version = platform.python_version()
+   uptime = time_formatter((time.time() - start_time) * 1000)
+   await rep.edit_text(f"🤖 ᑭOᑎᘜ: `{ms}`ᴍs"
+                       f"➪ᑌᑭ TIᗰᗴ: {uptime}\n"
+                       f"➪ᗷᗩᑎᑎᗴᖇ ᐯᗴᖇՏIOᑎ: {python_version},"
+                       f"➪ՏᑌᑭᑭOᖇT: @UmbrellaUCorp ,"
+                      )
 
 @bot.on_message(filters.command(["help", "start"]))
 async def start_message(_, message: Message):
