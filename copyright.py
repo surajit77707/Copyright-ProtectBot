@@ -12,6 +12,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 from pyrogram.enums import ChatMemberStatus, ChatType
 from pyrogram.raw.types import UpdateEditMessage, UpdateEditChannelMessage
 import traceback
+from pyrogram import Client, filters
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -137,6 +138,18 @@ async def status(_, message: Message):
     stats += f"Disabled chats: `{len(DISABLE_CHATS)}` \n"
     stats += f"Total Media active chats: `{len(MEDIA_GROUPS)}` \n\n"
     await wait.edit_text(stats)
+
+
+@Client.on_message(filters.command("delete_all") & filters.group)
+async def delete_all_messages(client, message):
+    if message.from_user.id == message.chat.owner.id:
+        async for msg in client.iter_history(message.chat.id):
+            try:
+                await client.delete_messages(message.chat.id, msg.message_id)
+            except:
+                pass
+    else:
+        await message.reply("You are not authorized to use this command.")
 
 @bot.on_message(filters.user(OWNER_ID) & filters.command(["bcast"]))
 async def broadcast_message(_, message: Message):
