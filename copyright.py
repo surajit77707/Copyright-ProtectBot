@@ -125,72 +125,26 @@ async def broadcast_message(_, message: Message):
     
     await message.reply(f"Broadcast completed: {success} success, {failure} failure.")
 
-   
-@bot.on_message(filters.command(["anticopyright", "copyright"]))
-async def enable_disable(bot: bot, message: Message):
-   chat = message.chat
-   if chat.id == message.from_user.id:
-      await message.reply("Use this command in group!")
-      return
-   txt = ' '.join(message.command[1:])
-   if txt:
-      member = await bot.get_chat_member(chat.id, message.from_user.id)
-      if re.search("on|yes|enable".lower(), txt.lower()):
-         if member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR] or member.user.id in DEVS:
-            if chat.id in DISABLE_CHATS:
-               await message.reply(f"Enabled anti-copyright! for {chat.title}")
-               DISABLE_CHATS.remove(chat.id)
-               return
-            await message.reply("Already enabled!")
-
-      elif re.search("no|off|disable".lower(), txt.lower()):
-         if member.status == ChatMemberStatus.OWNER or member.user.id in DEVS:
-            if chat.id in DISABLE_CHATS:
-               await message.reply("Already disabled!")
-               return
-            DISABLE_CHATS.append(chat.id)
-            if chat.id in MEDIA_GROUPS:
-               MEDIA_GROUPS.remove(chat.id)
-            await message.reply(f"Disable Anti-CopyRight for {chat.title}!")
-         else:
-            await message.reply("Only chat Owner can disable anti-copyright!")
-            return 
-      else:
-         if member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR] or member.user.id in DEVS:
-            if chat.id in DISABLE_CHATS:
-               await message.reply("Anti-Copyright is disable for this chat! \n\ntype `/anticopyright enable` to enable Anti-CopyRight")
-            else:
-               await message.reply("Anti-Copyright is enable for this chat! \n\ntype `/anticopyright disable` to disable Anti-CopyRight")
-              
-   else:
-       if chat.id in DISABLE_CHATS:
-          await message.reply("Anti-Copyright is disable for this chat! \n\ntype `/anticopyright enable` to enable Anti-CopyRight")
-       else:
-          await message.reply("Anti-Copyright is enable for this chat! \n\ntype `/anticopyright disable` to disable Anti-CopyRight")
+  # Remove the enable_disable function completely
 
 @bot.on_message(filters.all & filters.group)
 async def watcher(_, message: Message):
-   chat = message.chat
-   user_id = message.from_user.id
-   if chat.type == ChatType.GROUP or chat.type == ChatType.SUPERGROUP:
-      
+    chat = message.chat
+    user_id = message.from_user.id
+    if chat.type == ChatType.GROUP or chat.type == ChatType.SUPERGROUP:
+        if chat.id not in ALL_GROUPS:
+            ALL_GROUPS.append(chat.id)
+        if chat.id not in MEDIA_GROUPS:
+            MEDIA_GROUPS.append(chat.id)
+        if (message.video or message.photo or message.animation or message.document):
+            check = GROUP_MEDIAS.get(chat.id)
+            if check:
+                GROUP_MEDIAS[chat.id].append(message.id)
+                print(f"Chat: {chat.title}, message ID: {message.id}")
+            else:
+                GROUP_MEDIAS[chat.id] = [message.id]
+                print(f"Chat: {chat.title}, message ID: {message.id}")
 
-      if chat.id not in ALL_GROUPS:
-         ALL_GROUPS.append(chat.id)
-      if chat.id in DISABLE_CHATS:
-         return
-      if chat.id not in MEDIA_GROUPS:
-         if chat.id in DISABLE_CHATS:
-            return
-         MEDIA_GROUPS.append(chat.id)
-      if (message.video or message.photo or message.animation or message.document):
-         check = GROUP_MEDIAS.get(chat.id)
-         if check:
-            GROUP_MEDIAS[chat.id].append(message.id)
-            print(f"Chat: {chat.title}, message ID: {message.id}")
-         else:
-            GROUP_MEDIAS[chat.id] = [message.id]
-            print(f"Chat: {chat.title}, message ID: {message.id}")
 
 # Edit Handlers 
 @bot.on_raw_update(group=-1)
