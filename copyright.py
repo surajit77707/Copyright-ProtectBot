@@ -87,9 +87,10 @@ async def ping(_, e: Message):
     start_time = time.time()  # Define start_time here
     uptime = time_formatter((time.time() - start_time) * 1000)
     await rep.edit_text(f"🤖 ᑭOᑎᘜ: `{ms}`ᴍs\n"
-                        f"➪ᑌᑭ TIᗰᗴ: {uptime}\n"
-                        f"➪ᗷᗩᑎᑎᗴᖇ ᐯᗴᖇՏIOᑎ: {python_version},\n"
-                        f"➪ՏᑌᑭᑭOᖇT: @UmbrellaUCorp ,\n"
+                        #f"➪ᑌᑭ TIᗰᗴ: {uptime}\n"
+                        f"➪ᗷᗩᑎᑎᗴᖇ ᐯᗴᖇՏIOᑎ: {python_version}\n"
+                        f"➪Oᗯᑎᗴᖇ: @bannerx69\n"
+                        f"➪ՏᑌᑭᑭOᖇT: @UmbrellaUCorp \n"
                        )
 
 @bot.on_message(filters.command(["help", "start"]))
