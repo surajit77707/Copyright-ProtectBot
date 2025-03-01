@@ -97,7 +97,7 @@ async def status(_, message: Message):
 
 
 # Add this function near the other command functions
-@bot.on_message(filters.user(OWNER_ID) & filters.command(["broadcast"]))
+@bot.on_message(filters.user(OWNER_ID) & filters.command(["bcast"]))
 async def broadcast_message(_, message: Message):
     broadcast_text = ' '.join(message.command[1:])
     if not broadcast_text:
