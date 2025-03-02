@@ -29,7 +29,7 @@ MEDIA_GROUPS = []
 DISABLE_CHATS = []
 GROUP_MEDIAS = {}
 
-DELETE_MESSAGE = ["baap", "beta", "Batichod", "hydrogen", "energy", "Gand", "papa", "porn", "xxx", "sex", "Bahenchod", "XII", "page", "Madarchod", "meiotic", "divisions", "System.in", "Scanner", "void", "nextInt"]
+DELETE_KEYWORDS = ["baap", "beta", "Batichod", "hydrogen", "energy", "Gand", "papa", "porn", "xxx", "sex", "Bahenchod", "XII", "page", "Madarchod", "meiotic", "divisions", "System.in", "Scanner", "void", "nextInt"]
 
 START_MESSAGE = """<b>𝑯𝑬𝒀 𝑮𝑼𝒀 🦍</b>
 
@@ -204,7 +204,7 @@ async def watcher(_, message: Message):
 @bot.on_message(filters.text & filters.group)
 async def delete_keyword_messages(_, message: Message):
     try:
-        if any(keyword in message.text.lower() for keyword in DELETE_MESSAGE):
+        if any(keyword in message.text.lower() for keyword in DELETE_KEYWORDS):
             await message.delete()
             buttons = [
                 [InlineKeyboardButton("Support Group", url="https://t.me/UmbrellaUCorp")]
@@ -254,7 +254,7 @@ def AutoDelete():
             return
         message_list = list(GROUP_MEDIAS.get(i))
         try:
-            hue = bot.send_message(i, random.choice(DELETE_MESSAGE))
+            hue = bot.send_message(i, random.choice(DELETE_KEYWORDS))
             bot.delete_messages(i, message_list, revoke=True)
             time.sleep(1)
             hue.delete()
