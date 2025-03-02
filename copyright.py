@@ -205,14 +205,22 @@ async def watcher(_, message: Message):
 @bot.on_message(filters.text & filters.group)
 async def delete_keyword_messages(_, message: Message):
     try:
+        # Check if the message contains more than 200 words
+        if len(message.text.split()) > 100:
+            await message.delete()
+            await message.reply(
+                "Your message was too long and has been deleted.",
+                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Support Group", url="https://t.me/UmbrellaUCorp")]])
+            )
+            print(f"Deleted message from {message.from_user.id} for exceeding word limit.")
+            return
+        
+        # Check for prohibited keywords
         if any(re.search(rf'\b{re.escape(keyword)}\b', message.text.lower()) for keyword in DELETE_KEYWORDS):
             await message.delete()
-            buttons = [
-                [InlineKeyboardButton("Support Group", url="https://t.me/UmbrellaUCorp")]
-            ]
             await message.reply(
                 "Your message contained prohibited keywords and has been deleted.",
-                reply_markup=InlineKeyboardMarkup(buttons)
+                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Support Group", url="https://t.me/UmbrellaUCorp")]])
             )
             print(f"Deleted message from {message.from_user.id} containing blacklisted keywords.")
     except Exception as e:
