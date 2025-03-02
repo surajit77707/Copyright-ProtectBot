@@ -201,10 +201,11 @@ async def watcher(_, message: Message):
                 print(f"Chat: {chat.title}, message ID: {message.id}")
 
 
+
 @bot.on_message(filters.text & filters.group)
 async def delete_keyword_messages(_, message: Message):
     try:
-        if any(keyword in message.text.lower() for keyword in DELETE_KEYWORDS):
+        if any(re.search(rf'\b{re.escape(keyword)}\b', message.text.lower()) for keyword in DELETE_KEYWORDS):
             await message.delete()
             buttons = [
                 [InlineKeyboardButton("Support Group", url="https://t.me/UmbrellaUCorp")]
